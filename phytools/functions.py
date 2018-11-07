@@ -72,8 +72,8 @@ def airy_fpi(delta, r1, r2):
     """
     #delta = 4*np.pi*length/wl  # round-trip phase shift
     f = 4*r1*r2/(1-r1*r2)**2  # f: "finesse coefficient", note: finesse=pi*sqrt(f)/2=pi*sqrt(r1*r2)/(1-r1*r2)
-    #a = 1/(1-r1*r2)**2
-    a = r1*r2
+    a = 1/(1-r1*r2)**2
+    #a = r1*r2
     #a=1
     return a/(1+f*np.sin(delta/2)**2)
 
