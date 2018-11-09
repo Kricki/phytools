@@ -18,7 +18,7 @@ setup(
     version='0.1.0',
     author='',
     author_email='euphiment@gmx.de',
-    url='',
+    url='https://github.com/kricki/phytools',
     description='Tools for physicists',
     long_description=long_description,
     packages=find_packages(),

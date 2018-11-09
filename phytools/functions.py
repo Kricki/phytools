@@ -1,5 +1,7 @@
 import numpy as np
 
+from . import misc
+
 
 def gaussian(x, a, x0, fwhm, offset):
     """ Compute Gaussian function.
@@ -7,11 +9,16 @@ def gaussian(x, a, x0, fwhm, offset):
 
     Parameters
     ----------
-    x : parameter at which the Gaussian function is computed
-    a : amplitude
-    x0 : offset on x-axis
-    fwhm : Full-width-at-half-maximum (FWHM)
-    offset : amplitude offset
+    x : float
+        parameter at which the Gaussian function is computed
+    a : float
+        amplitude
+    x0 : float
+        offset on x-axis
+    fwhm : float
+        Full-width-at-half-maximum (FWHM)
+    offset : float
+        amplitude offset
 
     Returns
     -------
@@ -98,3 +105,38 @@ def scale(value, mode):
         return 10**(value/10)
     elif mode == 'log':
         return np.log10(value) * 10
+
+def initial_fit_values(data_x, data_y, mode):
+    """ Guess initial values for a fit procedure
+
+    Parameters
+    ----------
+    data_x : np.array
+        x data
+    data_y : np.array
+        y_data
+    mode : str
+        Defines which function is assumed for fitting procedure. Can be one of the following:
+        'gaussian', 'lorentzian'
+
+    Returns
+    -------
+    List of initial values. Content of the list depends on "mode".
+    mode == 'gaussian' or 'lorentzian': [amplitude (a), offset on x-axis (x0), full-width-at-half-maximum (fwhm),
+        amplitude offset (offset)]
+    """
+    if mode == 'gaussian' or mode == 'lorentzian':
+        max_index = np.argmax(data_y)
+        x0_0 = data_x[max_index]
+        a_0 = data_y[max_index]
+
+        _, idx_right = misc.find_nearest(data_y[max_index:-1], a_0 / 2)
+        _, idx_left = misc.find_nearest(data_y[0:max_index], a_0 / 2)
+        y_right = data_y[max_index + idx_right]
+        y_left = data_y[idx_left]
+        fwhm_0 = np.abs(y_right - y_left)
+
+        offset_0 = np.amin(data_y)
+
+        return [a_0, x0_0, fwhm_0, offset_0]
+
