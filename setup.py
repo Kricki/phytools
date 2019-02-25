@@ -23,5 +23,5 @@ setup(
     long_description=long_description,
     packages=find_packages(),
     classifiers=[f for f in CLASSIFIERS.split('\n') if f],
-    install_requires=['numpy'],
+    install_requires=['numpy', 'scipy'],
 )
