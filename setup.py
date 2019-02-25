@@ -21,7 +21,8 @@ setup(
     url='https://github.com/kricki/phytools',
     description='Tools for physicists',
     long_description=long_description,
+    long_description_content_type='text/markdown',
     packages=find_packages(),
     classifiers=[f for f in CLASSIFIERS.split('\n') if f],
-    install_requires=['numpy', 'scipy'],
+    install_requires=['numpy', 'scipy']
 )
