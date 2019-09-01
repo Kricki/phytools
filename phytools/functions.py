@@ -25,9 +25,48 @@ def gaussian(x, a, x0, fwhm, offset):
     float
         Value of Gaussian function for x
 
+    Notes
+    -----
+    If x is an np.array, a corresponding array is returned.
     """
     s = fwhm/(2*np.sqrt(2*np.log(2)))
     return a*np.exp(-(x-x0)**2/(2*s**2)) + offset
+
+def gaussian2d(x, y, a, x0, y0, fwhm_x, fwhm_y, offset):
+    """ Compute two-dimensioanl Gaussian function.
+
+    Parameters
+    ----------
+    x : float
+        x coordinate at which the Gaussian function is computed
+    y : float
+        y coordinate at which the Gaussian function is computed
+    a : float
+        amplitude
+    x0 : float
+        offset on x-axis
+    y0 : float
+        offset on y-axis
+    fwhm_x : float
+        Full-width-at-half-maximum (FWHM) along x axis
+    fwhm_y : float
+        Full-width-at-half-maximum (FWHM) along y axis
+    offset : float
+        amplitude offset
+
+    Returns
+    -------
+    float
+        Value of Gaussian function at coordinates x,y
+
+    Notes
+    -----
+    If x is an np.mgrid (or meshgrid), a corresponding mgrid is returned.
+    """
+    s_x = fwhm_x/(2*np.sqrt(2*np.log(2)))
+    s_y = fwhm_y/(2*np.sqrt(2*np.log(2)))
+
+    return a*np.exp(-(x-x0)**2/(2*s_x**2) - (y-y0)**2/(2*s_y**2)) + offset
 
 
 def lorentzian(x, a, x0, fwhm, offset):
