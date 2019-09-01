@@ -2,11 +2,11 @@
 Useful tools for physicists
 
 ## Installation
-Download or clone repository and:
+Download or clone repository, navigate to the folder `phytools` and:
 ````
-python setup.py install
+pip install .
 ````
-Or via pip:
+Or via pip from the PyPi server:
 ````
-pip install https://github.com/kricki/phytools/archive/master.zip
+pip install phytools
 ````
