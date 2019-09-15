@@ -152,6 +152,32 @@ def boxcar(x_array, center, width):
     return r
 
 
+def boxcar_inverse(x_array, center, width):
+    """ Compute inverse boxcar (rectangular) function
+
+    Parameters
+    ----------
+    x_array : np.ndarray
+        Array containing the x values of the function
+    center : float
+        Center of the box (rectangular pulse) in units of x_array
+    width : float
+        Center of the box (rectangular pulse) in units of x_array
+
+    Returns
+    -------
+    np.ndarray
+        Inverse boxcar function
+    """
+    r = np.zeros(len(x_array))
+    for idx, x in enumerate(x_array):
+        if center-width/2 <= x <= center+width/2:
+            r[idx] = 0
+        else:
+            r[idx] = 1
+    return r
+
+
 def scale(value, mode):
     """ Scale value
 
