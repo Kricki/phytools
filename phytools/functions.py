@@ -32,6 +32,7 @@ def gaussian(x, a, x0, fwhm, offset):
     s = fwhm/(2*np.sqrt(2*np.log(2)))
     return a*np.exp(-(x-x0)**2/(2*s**2)) + offset
 
+
 def gaussian2d(x, y, a, x0, y0, fwhm_x, fwhm_y, offset):
     """ Compute two-dimensioanl Gaussian function.
 
@@ -124,6 +125,33 @@ def airy_fpi(delta, r1, r2):
     return a/(1+f*np.sin(delta/2)**2)
 
 
+def boxcar(x_array, center, width):
+    """ Compute boxcar (rectangular) function
+    https://en.wikipedia.org/wiki/Boxcar_function
+
+    Parameters
+    ----------
+    x_array : np.ndarray
+        Array containing the x values of the function
+    center : float
+        Center of the box (rectangular pulse) in units of x_array
+    width : float
+        Center of the box (rectangular pulse) in units of x_array
+
+    Returns
+    -------
+    np.ndarray
+        Boxcar function
+    """
+    r = np.zeros(len(x_array))
+    for idx, x in enumerate(x_array):
+        if center-width/2 <= x <= center+width/2:
+            r[idx] = 1
+        else:
+            r[idx] = 0
+    return r
+
+
 def scale(value, mode):
     """ Scale value
 
@@ -144,6 +172,7 @@ def scale(value, mode):
         return 10**(value/10)
     elif mode == 'log':
         return np.log10(value) * 10
+
 
 def initial_fit_values(data_x, data_y, mode):
     """ Guess initial values for a fit procedure
@@ -178,4 +207,3 @@ def initial_fit_values(data_x, data_y, mode):
         offset_0 = np.amin(data_y)
 
         return [a_0, x0_0, fwhm_0, offset_0]
-
