@@ -1,4 +1,5 @@
 import numpy as np
+import warnings
 
 from . import misc
 
@@ -178,6 +179,40 @@ def boxcar_inverse(x_array, center, width):
     return r
 
 
+def scale_lin2log(value):
+    """
+    Scale value to log scale: log10(value)*10
+
+    Parameters
+    ----------
+    value : float or array-like
+        Value or array to be scaled
+
+    Returns
+    -------
+    float or array-like
+        Scaled value
+    """
+    return np.log10(value)*10
+
+
+def scale_log2lin(value):
+    """
+    Scale value from log10 to linear scale: 10**(value/10)
+
+    Parameters
+    ----------
+    value : float or array-like
+        Value or array to be scaled
+
+    Returns
+    -------
+    float or array-like
+        Scaled value
+    """
+    return 10**(value/10)
+
+
 def scale(value, mode):
     """ Scale value
 
@@ -194,10 +229,13 @@ def scale(value, mode):
     float or array-like
         Scaled value
     """
+    warnings.warn('scale is deprecated. Use scale_log2lin or scale_lin2log instead.', DeprecationWarning)
+    print('Warning: scale is deprecated. Use scale_log2lin or scale_lin2log instead.')
+
     if mode == 'linear':
-        return 10**(value/10)
+        return scale_log2lin(value)
     elif mode == 'log':
-        return np.log10(value) * 10
+        return scale_lin2log(value)
 
 
 def initial_fit_values(data_x, data_y, mode):

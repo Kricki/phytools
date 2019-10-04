@@ -1,7 +1,7 @@
 import numpy as np
 import scipy.linalg as LA
 import math
-
+import warnings
 
 def moving_average_filter(signal, taps):
     """ Apply moving average filter.
@@ -17,12 +17,40 @@ def moving_average_filter(signal, taps):
     return output
 
 
+def scale_array(array, lower, upper):
+    """
+    Scale values in array to range [lower, upper]
+
+    See: https://stats.stackexchange.com/questions/281162/scale-a-number-between-a-range
+
+    Parameters
+    ----------
+    array : array-like
+    lower : float
+        lower end of range
+    upper : float
+        upper end of range
+
+    Returns
+    -------
+    array-like
+        Scaled array
+    """
+    min_value = np.min(array)
+    max_value = np.max(array)
+
+    scaled = [(upper-lower)*(x-min_value)/(max_value-min_value)+lower for x in array]
+    return scaled
+
+
 def normalize_array(array):
     """ Normalize array to 1.
 
     :param array: Array to be normalized
     :return: Normalized array
     """
+    warnings.warn('Obsolete function. Use scale_array instead.', DeprecationWarning)
+
     #return array/max(array)
     array_tmp = array.copy()
     if np.min(array) < 0:
