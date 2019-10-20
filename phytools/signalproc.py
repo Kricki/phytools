@@ -3,21 +3,30 @@ import scipy.linalg as LA
 import math
 import warnings
 
-def moving_average_filter(signal, taps):
-    """ Apply moving average filter.
+
+def moving_average_filter(signal: np.ndarray, taps: int) -> np.ndarray:
+    """
+    Apply moving average filter to "signal".
     See http://www.analog.com/media/en/technical-documentation/dsp-book/dsp_book_Ch15.pdf
 
-    :param array signal: The signal to be filtered
-    :param int taps: width of filter window
-    :return: filtered input signal
-    """
+    Parameters
+    ----------
+    signal : np.ndarray
+        The signal to be filtered
+    taps : int
+        width of filter window
 
+    Returns
+    -------
+    np.ndarray
+        filtered input signal
+    """
     filter_window = np.ones(taps)/taps
     output = np.convolve(signal, filter_window, 'same')
     return output
 
 
-def scale_array(array, lower, upper):
+def scale_array(array: np.ndarray, lower: float, upper: float) -> np.ndarray:
     """
     Scale values in array to range [lower, upper]
 
@@ -25,7 +34,7 @@ def scale_array(array, lower, upper):
 
     Parameters
     ----------
-    array : array-like
+    array : np.ndarray
     lower : float
         lower end of range
     upper : float
@@ -33,13 +42,13 @@ def scale_array(array, lower, upper):
 
     Returns
     -------
-    array-like
+    np.ndarray
         Scaled array
     """
     min_value = np.min(array)
     max_value = np.max(array)
 
-    scaled = [(upper-lower)*(x-min_value)/(max_value-min_value)+lower for x in array]
+    scaled = np.array([(upper-lower)*(x-min_value)/(max_value-min_value)+lower for x in array])
     return scaled
 
 
