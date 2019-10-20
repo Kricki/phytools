@@ -98,34 +98,6 @@ def lorentzian(x, a, x0, fwhm, offset):
     return a*fwhm**2/4/((x-x0)**2 + (fwhm/2)**2) + offset
 
 
-#def airy_fpi(length, wl, finesse):
-#    delta = 4*np.pi*length/wl
-#    return 1/(1+finesse*np.sin(delta/2)**2)
-
-def airy_fpi(delta, r1, r2):
-    """ Compute Airy function of a Fabry-Perot interferometer
-
-    Parameters
-    ----------
-    delta : float
-        Round-trip phase inside the cavity (in radians)
-    r1 : Reflection coefficient (field value) for mirror 1
-    r2 : Reflection coefficient (field value) for mirror 1
-
-    Returns
-    -------
-    float
-        Value of Airy function
-
-    """
-    #delta = 4*np.pi*length/wl  # round-trip phase shift
-    f = 4*r1*r2/(1-r1*r2)**2  # f: "finesse coefficient", note: finesse=pi*sqrt(f)/2=pi*sqrt(r1*r2)/(1-r1*r2)
-    a = 1/(1-r1*r2)**2
-    #a = r1*r2
-    #a=1
-    return a/(1+f*np.sin(delta/2)**2)
-
-
 def boxcar(x_array, center, width):
     """ Compute boxcar (rectangular) function
     https://en.wikipedia.org/wiki/Boxcar_function
